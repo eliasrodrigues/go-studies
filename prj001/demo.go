@@ -3,6 +3,6 @@ package main
 import "fmt"
 
 func main() {
-	// First code
-	fmt.Println("Aloha Humans!")
+	x := false
+	fmt.Println("Hello", 2, x)
 }

@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <title>CNPJ Lookup</title>
+        <link rel="stylesheet" href="/static/style.css">
+    </head>
+    <body>
+
+        <div class="container">
+            <h1>CNPJ Lookup</h1>
+
+            <form method="GET" action="/buscar">
+                <input type="text" name="cnpj" placeholder="Enter CNPJ" required>
+                <button type="submit">Search</button>
+            </form>
+
+            {{ if . }}
+            <div class="result">
+                <h2>Company Data</h2>
+
+                <p><strong>Name:</strong> {{ .Nome }}</p>
+                <p><strong>Fantasy Name:</strong> {{ .Fantasia }}</p>
+                <p><strong>Status:</strong> {{ .Situacao }}</p>
+            </div>
+            {{ end }}
+        </div>
+
+    </body>
+</html>

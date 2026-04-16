@@ -1,30 +1,86 @@
 <!DOCTYPE html>
 <html lang="en">
-    <head>
-        <meta charset="UTF-8">
-        <title>CNPJ Lookup</title>
-        <link rel="stylesheet" href="/static/style.css">
-    </head>
-    <body>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CNPJ Lookup</title>
+    <link rel="stylesheet" href="/static/style.css">
+</head>
+<body>
+    <div class="container">
+        <h1>CNPJ Lookup</h1>
+        <p class="subtitle">Search Brazilian company information using Go + templates</p>
 
-        <div class="container">
-            <h1>CNPJ Lookup</h1>
+        <form method="GET" action="/buscar" class="search-form">
+            <input
+                type="text"
+                name="cnpj"
+                placeholder="Enter CNPJ"
+                value="{{ .CNPJ }}"
+                required
+            >
+            <button type="submit">Search</button>
+        </form>
 
-            <form method="GET" action="/buscar">
-                <input type="text" name="cnpj" placeholder="Enter CNPJ" required>
-                <button type="submit">Search</button>
-            </form>
+        {{ if .Error }}
+        <div class="alert error">
+            {{ .Error }}
+        </div>
+        {{ end }}
 
-            {{ if . }}
-            <div class="result">
-                <h2>Company Data</h2>
+        {{ if .Empresa }}
+        <div class="result">
+            <h2>Company Data</h2>
 
-                <p><strong>Name:</strong> {{ .Nome }}</p>
-                <p><strong>Fantasy Name:</strong> {{ .Fantasia }}</p>
-                <p><strong>Status:</strong> {{ .Situacao }}</p>
+            <div class="grid">
+                <div><strong>CNPJ:</strong> {{ .Empresa.CNPJ }}</div>
+                <div><strong>Razão Social:</strong> {{ .Empresa.RazaoSocial }}</div>
+                <div><strong>Nome Fantasia:</strong> {{ .Empresa.NomeFantasia }}</div>
+                <div><strong>Situação Cadastral:</strong> {{ .Empresa.SituacaoCadastral }}</div>
+                <div><strong>Data de Abertura:</strong> {{ .Empresa.DataInicioAtividade }}</div>
+                <div><strong>Natureza Jurídica:</strong> {{ .Empresa.NaturezaJuridica }}</div>
+                <div><strong>CNAE Principal:</strong> {{ .Empresa.CNAEPrincipal }}</div>
+                <div><strong>Porte:</strong> {{ .Empresa.PorteEmpresa }}</div>
+                <div><strong>Email:</strong> {{ .Empresa.Email }}</div>
+                <div><strong>Município:</strong> {{ .Empresa.Municipio }}</div>
+                <div><strong>UF:</strong> {{ .Empresa.UF }}</div>
+                <div><strong>CEP:</strong> {{ .Empresa.CEP }}</div>
+            </div>
+
+            <div class="address">
+                <h3>Address</h3>
+                <p>
+                    {{ .Empresa.Logradouro }}, {{ .Empresa.Numero }}
+                    {{ if .Empresa.Complemento }} - {{ .Empresa.Complemento }}{{ end }}
+                </p>
+                <p>{{ .Empresa.Bairro }} - {{ .Empresa.Municipio }}/{{ .Empresa.UF }}</p>
+            </div>
+
+            {{ if .Empresa.Telefones }}
+            <div class="phones">
+                <h3>Phones</h3>
+                <ul>
+                    {{ range .Empresa.Telefones }}
+                    <li>({{ .DDD }}) {{ .Numero }}</li>
+                    {{ end }}
+                </ul>
+            </div>
+            {{ end }}
+
+            {{ if .Empresa.QSA }}
+            <div class="partners">
+                <h3>Partners / QSA</h3>
+                <ul>
+                    {{ range .Empresa.QSA }}
+                    <li>
+                        <strong>{{ .NomeSocio }}</strong> — {{ .QualificacaoSocio }}
+                    </li>
+                    {{ end }}
+                </ul>
             </div>
             {{ end }}
         </div>
-
-    </body>
+        {{ end }}
+    </div>
+</body>
 </html>

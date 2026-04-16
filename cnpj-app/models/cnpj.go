@@ -38,9 +38,9 @@ type Empresa struct {
 	Telefones             []Telefone `json:"telefones"`
 	CapitalSocial         string     `json:"capital_social"`
 	PorteEmpresa          string     `json:"porte_empresa"`
-	OpcaoSimples          *bool      `json:"opcao_simples"`
+	OpcaoSimples          *string    `json:"opcao_simples"`
 	DataOpcaoSimples      *string    `json:"data_opcao_simples"`
-	OpcaoMEI              *bool      `json:"opcao_mei"`
+	OpcaoMEI              *string    `json:"opcao_mei"`
 	DataOpcaoMEI          *string    `json:"data_opcao_mei"`
 	QSA                   []Socio    `json:"QSA"`
 }
